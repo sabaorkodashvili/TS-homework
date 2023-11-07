@@ -2,9 +2,6 @@ import { ThemeProvider } from "styled-components";
 import { Input, TaskDiv } from "./Components.Styled/styled";
 import GlobalStyles from "./Components.Styled/styled";
 import Tasks from "./tasks";
-// import DltButton from "";
-import { DltButton } from "./Components.Styled/styled";
-
 import React, { useState, KeyboardEvent } from "react";
 
 function App() {
@@ -14,11 +11,10 @@ function App() {
       input: "#e5e5e7",
     },
   };
-  ////
   const [inputValue, setInputValue] = useState<string>("");
   const [textList, setTextList] = useState<string[]>([]);
-  //
-  const [divList, setDivList] = useState<string[]>([]);
+
+  const [items, setItems] = useState<string[]>([]);
 
   const handleDelete = (index: number) => {
     const updatedItems = [...textList];
@@ -26,28 +22,26 @@ function App() {
     setTextList(updatedItems);
   };
 
-  ///
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
+  const [colors, setColors] = useState<string[]>([]);
+
+  const getRandomColor = () => {
+    const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+    return color;
+  };
   const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && inputValue.trim() !== "") {
       setTextList([...textList, inputValue]);
-      setInputValue("");
       // setDivList([...divList, inputValue]);
+      setInputValue("");
     }
   };
-
   const [underlined, setUnderlined] = useState<boolean>(false);
-
   const toggleUnderline = () => {
     setUnderlined((prevUnderlined) => !prevUnderlined);
-  };
-  ////
-  const getRandomColor = () => {
-    const borderColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-    return borderColor;
   };
   return (
     <>
@@ -61,14 +55,13 @@ function App() {
           onKeyPress={handleKeyPress}
         ></Input>
         <div>
-          {textList.map((text, index, color, borderColor) => (
+          {textList.map((text, index, color) => (
             <Tasks
               key={index}
               prop={text}
               color={color}
-              borderColor={borderColor}
-              btnStyle={{ borderColorr: getRandomColor() }}
               funct={() => handleDelete(index)}
+              BoxColor={{ borderColor: getRandomColor() }}
             ></Tasks>
           ))}
         </div>

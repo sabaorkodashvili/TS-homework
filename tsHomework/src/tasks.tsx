@@ -10,15 +10,12 @@ import {
   TaskDate,
   Mark,
   DltButton,
-  // HoverArea,
 } from "./Components.Styled/styled";
 
 interface MyComponentProps {
   prop: string;
   color: string[];
-  borderColor: string[];
-  btnStyle: (backgroundColor: string) => void;
-
+  BoxColor: { borderColor: string };
   funct: (arg: string) => void;
 }
 
@@ -26,17 +23,8 @@ const Tasks: React.FC<MyComponentProps> = ({
   prop,
   color,
   funct,
-  borderColor,
-  // btnStyle,
+  BoxColor,
 }) => {
-  const boxStyle = {
-    borderColor,
-    backgroundColor: color,
-  };
-  const btnStyle = {
-    borderColor,
-  };
-
   const [underlined, setUnderlined] = useState<boolean>(false);
 
   const toggleUnderline = () => {
@@ -49,14 +37,6 @@ const Tasks: React.FC<MyComponentProps> = ({
   const formattedMonth = currentMonth < 10 ? `0${currentMonth}` : currentMonth;
   const currentDay = currentDate.getDate();
   const formattedDay = currentDay < 10 ? `0${currentDay}` : currentDay;
-
-  const [items, setItems] = useState<string[]>(["Item 1", "Item 2", "Item 3"]);
-
-  const handleDelete = (index: number) => {
-    const updatedItems = [...items];
-    updatedItems.splice(index, 1);
-    setItems(updatedItems);
-  };
 
   return (
     <TaskDiv>
@@ -73,8 +53,6 @@ const Tasks: React.FC<MyComponentProps> = ({
       <TaskLis
         style={{
           textDecoration: underlined ? "line-through" : "none",
-
-          //   ChooseBtn: backgroundColor === black,
         }}
       >
         {prop}
@@ -82,7 +60,7 @@ const Tasks: React.FC<MyComponentProps> = ({
       <TaskDate>
         {formattedDay}/{formattedMonth}
       </TaskDate>
-      <DltButton style={btnStyle} onClick={funct}></DltButton>
+      <DltButton onClick={funct} style={BoxColor}></DltButton>
     </TaskDiv>
   );
 };

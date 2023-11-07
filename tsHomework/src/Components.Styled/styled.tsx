@@ -2,13 +2,14 @@ import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
 
 export const Input = styled.input`
-  width: 517px;
   // Fixed (517px)
+  width: 517px;
   height: 48px;
   background-color: #e5e5e7;
   color: black;
   height: 30px;
   border-radius: 12px;
+  padding: 6px;
 
   &:hover {
     background-color: #d3d1e2;
