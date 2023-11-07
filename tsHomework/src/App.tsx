@@ -2,6 +2,8 @@ import { ThemeProvider } from "styled-components";
 import { Input, TaskDiv } from "./Components.Styled/styled";
 import GlobalStyles from "./Components.Styled/styled";
 import Tasks from "./tasks";
+// import DltButton from "";
+import { DltButton } from "./Components.Styled/styled";
 
 import React, { useState, KeyboardEvent } from "react";
 
@@ -17,6 +19,13 @@ function App() {
   const [textList, setTextList] = useState<string[]>([]);
   //
   const [divList, setDivList] = useState<string[]>([]);
+
+  const handleDelete = (index: number) => {
+    const updatedItems = [...textList];
+    updatedItems.splice(index, 1);
+    setTextList(updatedItems);
+  };
+
   ///
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -36,6 +45,10 @@ function App() {
     setUnderlined((prevUnderlined) => !prevUnderlined);
   };
   ////
+  const getRandomColor = () => {
+    const borderColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+    return borderColor;
+  };
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -47,24 +60,18 @@ function App() {
           onChange={handleInputChange}
           onKeyPress={handleKeyPress}
         ></Input>
-        <Tasks></Tasks>
-        <Tasks></Tasks>
-        {/* <button onClick={toggleUnderline}>Underline Text</button> */}
         <div>
-          {textList.map((text, index) => (
-            <p
+          {textList.map((text, index, color, borderColor) => (
+            <Tasks
               key={index}
-              style={{ textDecoration: underlined ? "underline" : "none" }}
-            >
-              Text: {text}
-            </p>
+              prop={text}
+              color={color}
+              borderColor={borderColor}
+              btnStyle={{ borderColorr: getRandomColor() }}
+              funct={() => handleDelete(index)}
+            ></Tasks>
           ))}
         </div>
-        {/* <Tasks>
-          {divList.map((text, index) => (
-            <div key={index}>{text}</div>
-          ))}
-        </Tasks> */}
       </ThemeProvider>
     </>
   );
